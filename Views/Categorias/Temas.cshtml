@@ -1,0 +1,37 @@
+﻿@using Tarea2BDRazor.Models;
+
+@{ Usuario user= new Usuario();
+   Comentario comentario = new Comentario();
+   }
+
+@{
+    ViewBag.Title = "Temas";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+
+<h2>@ViewBag.NombreCat</h2>
+
+     @{
+        int i = 0;
+        foreach (Tema elemento in ViewBag.Temas)
+        {
+            
+                 
+            <ul>
+                <li>@Html.ActionLink(elemento.nombre, "Tema", new { controller="Categorias", nombreTema = elemento.nombre}) </li>
+                <li>Descripción: @elemento.descripcion</li>
+                <li>Publicado por: @user.obtenerNombreUsuarioPorID(elemento.id_usuario)</li>
+                <li>Cantidad de comentarios: @comentario.cantidadComentariosPorIDTema(elemento.id_tema)</li>  
+                <li>@Html.ActionLink("Eliminar Tema", "EliminarComentariosRec", new { controller="Categorias", id_tema = elemento.id_tema, id_categoria = elemento.id_categoria})   </li> 
+            </ul>
+            i++;  
+         }     
+         
+         <ul> <li>@Html.ActionLink("Crear Tema", "CrearTema", new { controller="Categorias", id_categoria = ViewBag.idCategoria})</li> </ul>
+    }
+            </div>
+        </section>
+}

@@ -1,0 +1,42 @@
+﻿@using Tarea2BDRazor.Models;
+@{
+    ViewBag.Title = "Página principal";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+
+        else 
+        {
+            <ul>
+                <li>@Html.ActionLink("Registrarse", "Registrarse", "Home")</li>
+                <li>@Html.ActionLink("Iniciar sesión", "Loguear", "Home") </li>
+            </ul>
+        }
+
+        <ul>
+            @{
+                foreach (Categoria elemento in ViewBag.ListCategorias)
+                {
+                 if (elemento.publico == true){
+                
+                     <li>@elemento.nombre
+                         <ul>
+                             <li>@elemento.descripcion</li>
+                             <li></li>
+                             <li></li>
+                         
+                         </ul>
+                     </li>     
+                 }
+                }
+            }
+            </ul>
+       </div>
+</section>
+
+}

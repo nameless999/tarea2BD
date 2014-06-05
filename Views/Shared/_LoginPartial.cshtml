@@ -1,0 +1,10 @@
+﻿@if (ViewBag.ValidateLogin == true) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+    </text>
+} else {
+    <ul>
+            <li>@Html.ActionLink("Registrarse", "Registrarse", "Home")</li>
+        <li>@Html.ActionLink("Iniciar sesión", "Loguear", "Home") </li>
+    </ul>
+}

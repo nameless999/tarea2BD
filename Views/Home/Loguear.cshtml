@@ -1,0 +1,27 @@
+﻿@model Tarea2BDRazor.Models.Usuario
+@{
+    ViewBag.Title = "Login";
+}
+<h2>Login</h2>
+@ViewBag.Message
+@ViewBag.Message1
+
+
+@using (Html.BeginForm("Loguear", "Home", FormMethod.Post))
+{
+    
+    <fieldset>
+        <legend> Ingrese sus datos </legend>
+        <p>
+            <label for="Nombre">Nombre:</label>
+            @Html.TextBoxFor(m => m.nombre)
+        </p>
+        <p>
+            <label for="Contraseña">Contraseña:</label>
+            @Html.TextBoxFor(m => m.contraseña)
+        </p>
+        <p>
+            <input type="submit" value="Loguear" />
+        </p>
+    </fieldset>
+}

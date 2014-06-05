@@ -1,0 +1,39 @@
+﻿@using Tarea2BDRazor.Models;
+@{
+    ViewBag.Title = "Categorias";
+}
+        
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+    <h2>Categorias</h2>
+
+    @{
+        
+        Categoria idCat = new Categoria();
+        int i = idCat.obtenerPrimerIDCategoria();
+        foreach (Categoria elemento in ViewBag.ListCategorias)
+        {
+            
+                 
+            <ul>
+                <li>@Html.ActionLink(elemento.nombre, "Temas", new { controller="Categorias", nid = i, id_user = Session["ID"].ToString()}) </li>
+                <ul>
+                    <li>@elemento.descripcion</li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </ul>
+            i++;     
+        }
+        
+         <ul>
+                <li>@Html.ActionLink("Nueva Categoria","CrearCategoria", new { controller="Categorias"}) </li>
+         </ul>
+        
+    }
+         </div>
+    </section>
+}
+ 

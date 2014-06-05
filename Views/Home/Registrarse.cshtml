@@ -1,0 +1,92 @@
+﻿@model Tarea2BDRazor.Models.Usuario
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+<script type="text/javascript">
+        
+    function userValid() {
+        var Name, pass, gender, conpass, born, a_url;
+
+        born = document.getElementById("bornId").value;
+        a_url = document.getElementById("a_urlId").value;
+        Name = document.getElementById("txtUserId").value;
+        gender = document.getElementById("ddlType").value;
+        pass = document.getElementById("txtPass1").value;
+        conpass = document.getElementById("txtPass2").value;
+ 
+
+        if (Name == '' && gender == 0 && pass == '' && conpass == '' && born == '' && a_url == '') {
+            alert("Enter All Fields");
+            return false;
+        };
+        if (Name == '') {
+            alert("Please Enter Login ID");
+            return false;
+        };
+        if (gender == 0) {
+            alert("Please Select gender");
+            return false;
+        };
+        if (pass == '') {
+            alert("Please Enter Password");
+            return false;
+        };
+        if (pass != '' && conpass == '') {
+            alert("Please Confirm Password");
+            return false;
+        };
+        if (pass != conpass) {
+            alert("Password not match");
+            return false;
+        };
+        return true;
+    };
+</script>
+
+<h2>Registrarse</h2>
+
+
+@using (Html.BeginForm("Register", "Home", FormMethod.Post, new { onsubmit = "return userValid();"  }))
+{
+    <fieldset>
+        <legend> Ingrese sus datos </legend>
+        <p>
+            <label for="Nombre">Nombre:</label>
+            @Html.TextBoxFor(m => m.nombre, new { id = "txtUserId" , placeholder="Ingrese su nombre"})
+            @Html.ValidationMessage("Nombre", "*")
+        </p>
+        <p>
+            <label for="Contraseña">Contraseña:</label>
+            @Html.TextBoxFor(m => m.contraseña, new { id = "txtPass1", placeholder="Ingrese su contraseña"})
+            @Html.ValidationMessage("Contraseña", "*")
+        </p>
+        <p>
+            <label for="re_contraseña">Repetir Contraseña:</label>
+            @Html.TextBox("re_contraseña", "", new { id = "txtPass2" })
+            @Html.ValidationMessage("re_contraseña", "*")
+        </p> 
+        <p>
+            <label for="fecha_nacimiento">Fecha Nacimiento</label>
+            @Html.TextBoxFor(m => m.fecha_nacimiento, new { id = "bornId" })
+            @Html.ValidationMessage("Fecha Nacimiento", "*")
+        </p>
+        <p>
+            @{
+        List<string> lista = new List<String>() { "Hombre", "Mujer" };
+            }
+            @Html.DropDownList("sexo", new SelectList(lista), "Sexo", new { id = "ddlType"})
+        </p>
+        <p>
+            <label for="Avatar usuario">Avatar Usuario:</label>
+            @Html.TextBoxFor(m => m.avatar_url,  new { id = "a_urlId" })
+            @Html.ValidationMessage("Avatar Usuario", "*")
+        </p>
+        
+
+
+        <p>
+            <input type="submit" value="Registrarse" />
+        </p>
+    </fieldset>
+}

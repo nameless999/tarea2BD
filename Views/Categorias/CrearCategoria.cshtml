@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "CrearCategoria";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+
+<h2>CrearCategoria</h2>
+
+@using (Html.BeginForm("IngresarCategoria", "Categorias", FormMethod.Post))
+{
+    
+    <fieldset>
+        <legend> Ingrese sus datos </legend>
+        <p>
+            <label for="Nombre">Nombre:</label>
+            @Html.TextBox("nombre")
+        </p>
+        <p>
+            <label for="Descripción">Descripción:</label>
+            @Html.TextArea("descripcion", new { cols = 60, rows = 10 })
+        </p>
+
+        <p>
+            <label for="Publico">Público:</label>
+            @Html.CheckBox("publico", true, new { onclick = "valuecheck(this)" })
+        </p>
+         
+        <p>
+            <input type="submit" value="Crear Tema" />
+        </p>
+    </fieldset>
+}
+            </div>
+        </section>
+            }

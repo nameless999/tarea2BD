@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "VerPerfil";
+}
+
+<h2>@ViewBag.NombreUsuario</h2>
+
+<img src="@ViewBag.AvatarUrl" />
+<ul>
+    <li>Nombre: @ViewBag.NombreUsuario</li>
+    <li>Edad: @ViewBag.Edad</li>
+    <li>Sexo: @ViewBag.Sexo</li>
+    <li>Numero de comentarios: @ViewBag.Ncomentarios</li>
+    <li>Fecha de Registro: @ViewBag.FechaRegistro</li>
+    <li>Tipo de Usuario: @ViewBag.TipoUsuario</li>
+</ul>

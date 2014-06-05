@@ -1,0 +1,39 @@
+﻿@using Tarea2BDRazor.Models;
+
+@{
+    Usuario usuario = new Usuario();
+}
+
+
+@{
+    ViewBag.Title = "Tema";
+}
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+
+<h2>@ViewBag.Tema.nombre</h2>
+
+<p></p>
+<p>@ViewBag.Tema.mensaje</p>
+
+@{
+    foreach( Comentario comentario in ViewBag.Comentarios){
+         <img src="@usuario.obtenerUsuarioPorID(comentario.id_usuario).avatar_url" width="40px"/> <span>@usuario.obtenerNombreUsuarioPorID(comentario.id_usuario)</span>
+         <p>@comentario.mensaje</p>
+         <span>@Html.ActionLink("Eliminar", "EliminarComentarioPorID", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </span>
+         <span> @Html.ActionLink("Editar" ,"UpdateComentario", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </span>          
+    }
+}
+
+@using (Html.BeginForm("CrearComentario", "Categorias", FormMethod.Post))
+{
+    @Html.Label("Responder");
+    @Html.TextArea("mensaje", new { cols = 20, rows = 10 });
+    
+    <input type="submit" value="Responder" />
+}
+            </div>
+        </section>
+            }
