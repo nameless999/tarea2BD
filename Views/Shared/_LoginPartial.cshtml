@@ -2,6 +2,7 @@
     <text>
         ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
     </text>
+       @Html.ActionLink("Correo", "MensajePrivado", "Home")
 } else {
     <ul>
             <li>@Html.ActionLink("Registrarse", "Registrarse", "Home")</li>

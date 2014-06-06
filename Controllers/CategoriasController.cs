@@ -55,6 +55,30 @@ namespace Tarea2BDRazor.Controllers
 
             return View();
         }
+        public ActionResult EliminarComentariosRec2(int id_tema, int id_categoria)
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+
+            String sql = "Delete from Comentario where id_tema = '" + id_tema + "'";
+
+            int retorno = 0;
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_tema), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            if (retorno > 0)
+            {
+                return RedirectToAction("EliminarTemaRec", "Categorias", new { id_cat = id_categoria, id_tem = id_tema });
+            }
+            return View();
+        }
 
         public ActionResult EliminarComentariosRec(int id_tema, int id_categoria)
         {
@@ -80,6 +104,57 @@ namespace Tarea2BDRazor.Controllers
             }
             return View();
         }
+
+        public ActionResult EliminarTemaRec(int id_tema, int id_categoria)
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+
+            String sql = "Delete from Comentario where id_categoria = '" + id_categoria + "'";
+
+            int retorno = 0;
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_categoria), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            if (retorno > 0)
+            {
+                return RedirectToAction("EliminarCategoria", "Categorias", new { id_cat = id_categoria, id_tem = id_tema });
+            }
+            return View();
+        }
+
+        public ActionResult EliminarCategoria(int id_categoria)
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+
+            String sql = "Delete from Categoria where id_categoria = '" + id_categoria + "'";
+
+            int retorno = 0;
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_categoria), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            if (retorno > 0)
+            {
+                return RedirectToAction("Categorias", "Home"); ;
+            }
+            return View();
+        }
+
 
         public ActionResult UpdateComentario(int id_comentario, int id_tema)
         {

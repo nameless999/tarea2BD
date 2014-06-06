@@ -26,6 +26,7 @@ namespace Tarea2BDRazor.Controllers
             return View();
         }
 
+
         public ActionResult Categorias()
         {
             Session["user_name"] = Session["user_name"];
@@ -33,10 +34,19 @@ namespace Tarea2BDRazor.Controllers
             Session["ID"] = Session["ID"];
             Categoria categoria = new Categoria();
             Tema tema = new Tema();
-            
+                
             List<Categoria> ListCategorias = new List<Categoria>();
             ListCategorias = categoria.obtenerCategorias();
             ViewBag.ListCategorias = ListCategorias;
+
+           
+            /*String sql = "Select count(*) from NComentariosPorCategoria where id_tema = '"+id_categoria+"'";
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql,id_tema), connection);
+                int count = (int)Comando.ExecuteScalar();
+            
+             */
 
             return View();
         }

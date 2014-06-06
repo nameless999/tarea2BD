@@ -12,6 +12,8 @@
     @{
         
         Categoria idCat = new Categoria();
+        Tema tema = new Tema();
+        Comentario comentario = new Comentario();
         int i = idCat.obtenerPrimerIDCategoria();
         foreach (Categoria elemento in ViewBag.ListCategorias)
         {
@@ -21,8 +23,9 @@
                 <li>@Html.ActionLink(elemento.nombre, "Temas", new { controller="Categorias", nid = i, id_user = Session["ID"].ToString()}) </li>
                 <ul>
                     <li>@elemento.descripcion</li>
+                    <li>@tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
                     <li></li>
-                    <li></li>
+                    <li>@Html.ActionLink("Eliminar", "EliminarTemaRec", new { controller="Categorias", id_categoria = elemento.id_categoria})</li>
                 </ul>
             </ul>
             i++;     

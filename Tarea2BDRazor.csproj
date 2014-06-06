@@ -175,6 +175,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\MensajePrivado.cs" />
     <Compile Include="Models\Comentario.cs" />
     <Compile Include="Models\Conexion.cs" />
     <Compile Include="Models\GrupoUsuario.cs" />
@@ -292,6 +293,7 @@
     <Content Include="Views\Categorias\CrearTema.cshtml" />
     <Content Include="Views\Categorias\CrearCategoria.cshtml" />
     <Content Include="Views\Home\VerPerfil.cshtml" />
+    <Content Include="Views\Home\MensajePrivado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
