@@ -15,7 +15,7 @@ namespace Tarea2BDRazor.Controllers
         public ActionResult Index()
         {
             Session["user_name"] = null;
-            Session["IDG"] = -1;
+            Session["IDG"] = 4;
             Session["ID"] = -1;
 
             Categoria categoria = new Categoria();
@@ -40,13 +40,7 @@ namespace Tarea2BDRazor.Controllers
             ViewBag.ListCategorias = ListCategorias;
 
            
-            /*String sql = "Select count(*) from NComentariosPorCategoria where id_tema = '"+id_categoria+"'";
-            using (SqlConnection connection = Conexion.getConnection())
-            {
-                SqlCommand Comando = new SqlCommand(string.Format(sql,id_tema), connection);
-                int count = (int)Comando.ExecuteScalar();
-            
-             */
+           
 
             return View();
         }
@@ -103,18 +97,76 @@ namespace Tarea2BDRazor.Controllers
                
          }
 
+        public ActionResult BuzonEntrada()
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+            List<MensajePrivado> mensajes = new List<MensajePrivado>();
+            MensajePrivado mensaje = new MensajePrivado();
+            BuzonEntrada Buzon = new BuzonEntrada();
+            mensajes = mensaje.obtenerMensajesIDbuzon(Buzon.ObtenerIDBuzonconIDUsuario(int.Parse(Session["ID"].ToString())));
+            ViewBag.Mensajes = mensajes;
+
+
+            return View();
+        }
+
+
+        public ActionResult MensajePrivado()
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+
+            List<BuzonEntrada> Buzones = new List<BuzonEntrada>();
+            BuzonEntrada Buzon = new BuzonEntrada();
+            Buzones = Buzon.ObtenerListaBuzones();
+            ViewBag.Buzones = Buzones;
+            return View();
+        }
+
         public ActionResult Logout()
         {
-            Session["user_name"] = null;
-            Session["IDG"] = -1;
-            Session["ID"] = -1;
             return Redirect("Index");
         }
 
-        public ActionResult VerPerfil()
+        public ActionResult VerPerfil(string nombre)
         {
+            Session["user_name"] = Session["user_name"];
             Session["IDG"] = Session["IDG"];
             Session["ID"] = Session["ID"];
+
+            Usuario usuario = new Usuario();
+            GrupoUsuario GUser = new GrupoUsuario();
+            usuario = usuario.obtenerUsuarioPorNombre(nombre);
+            ViewBag.NombreUsuario = usuario.nombre;
+            ViewBag.Edad = usuario.ObtenerEdad(usuario.id);
+            ViewBag.Sexo = usuario.sexo;
+            ViewBag.NComentarios = usuario.cantidad_comentarios;
+            ViewBag.FechaRegistro = usuario.fecha_registro;
+            ViewBag.AvatarUrl = usuario.avatar_url;
+            ViewBag.TipoUsuario = GUser.obtenerNombreGrupoPorID(int.Parse(Session["IDG"].ToString()));
+            List<ViewTemasCreados> VTC2 = new List<ViewTemasCreados>();
+            ViewTemasCreados VTC = new ViewTemasCreados();
+            VTC2 = VTC.ObtenerTemasCreados(usuario.id);
+            ViewBag.TemasCreados = VTC2;
+
+            List<ViewUltimosComentarios> VUC2 = new List<ViewUltimosComentarios>();
+            ViewUltimosComentarios VUC = new ViewUltimosComentarios();
+            VUC2 = VUC.ObtenerComentariosRealizados(usuario.id);
+            ViewBag.ComentariosRealizados = VUC2;
+
+
+            return View();
+        }
+
+        public ActionResult MiPerfil()
+        {
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+
             Usuario usuario = new Usuario();
             GrupoUsuario GUser = new GrupoUsuario();
             usuario = usuario.obtenerUsuarioPorID(int.Parse(Session["ID"].ToString()));
@@ -125,42 +177,46 @@ namespace Tarea2BDRazor.Controllers
             ViewBag.FechaRegistro = usuario.fecha_registro;
             ViewBag.AvatarUrl = usuario.avatar_url;
             ViewBag.TipoUsuario = GUser.obtenerNombreGrupoPorID(int.Parse(Session["IDG"].ToString()));
+            List<ViewTemasCreados> VTC2 = new List<ViewTemasCreados>();
+            ViewTemasCreados VTC = new ViewTemasCreados();
+            VTC2 = VTC.ObtenerTemasCreados(usuario.id);
+            ViewBag.TemasCreados = VTC2;
+            
+            List<ViewUltimosComentarios> VUC2 = new List<ViewUltimosComentarios>();
+            ViewUltimosComentarios VUC = new ViewUltimosComentarios();
+            VUC2 = VUC.ObtenerComentariosRealizados(usuario.id);
+            ViewBag.ComentariosRealizados = VUC2;
+
+
             return View();
         }
 
-        public ActionResult EditarPerfil()
+        public ActionResult EditarPerfil(string nombre_usuario)
         {
-           return RedirectToAction("EditarPerfil2", new { avatar_url = Request["avatar_url"], contraseña=Request["contraseña"],fecha_nacimiento = Request["fecha_nacimiento"]});
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+            ViewBag.NombreUsuario2 = nombre_usuario;
+            return View();
         }
 
-        public ActionResult EditarPerfil2(string avatar_url, string fecha_nacimiento, string contraseña  )
+        public ActionResult EditarPerfil2()
         {
-            Usuario user = new Usuario();
-            string nombre = user.obtenerNombreUsuariosbyAvatarUrl(avatar_url);
-            String sql = "Update Usuario set contraseña = '" + contraseña + "' where nombre = '" + nombre + "'";
-            String sql2 = "Update Usuario set fecha_nacimiento = '" + fecha_nacimiento + "' where nombre = '" + nombre + "'";
-            String sql3 = "Update Usuario set avatar_url = '" + avatar_url + "' where nombre = '" + nombre + "'";
+            Session["user_name"] = Session["user_name"];
+            Session["IDG"] = Session["IDG"];
+            Session["ID"] = Session["ID"];
+            string contraseña = (string)Request["contraseña"];
+            string fecha_nacimiento = (string)Request["fecha_nacimiento"];
+            string avatar_url = (string)Request["avatar_url"];
+            string nombre = (string)Request["nombre_usuario"];
+
+            String sql = "Update Usuario set contraseña = '" + contraseña + "', fecha_nacimiento = '" + fecha_nacimiento + "', avatar_url = '" + avatar_url + "' where nombre = '" + nombre + "'";
+
             int retorno = 0;
 
             using (SqlConnection connection = Conexion.getConnection())
             {
                 SqlCommand Comando = new SqlCommand(string.Format(sql, nombre), connection);
-
-                retorno = Comando.ExecuteNonQuery();
-                connection.Close();
-            }
-
-            using (SqlConnection connection = Conexion.getConnection())
-            {
-                SqlCommand Comando = new SqlCommand(string.Format(sql2, nombre), connection);
-
-                retorno = Comando.ExecuteNonQuery();
-                connection.Close();
-            }
-
-            using (SqlConnection connection = Conexion.getConnection())
-            {
-                SqlCommand Comando = new SqlCommand(string.Format(sql3, nombre), connection);
 
                 retorno = Comando.ExecuteNonQuery();
                 connection.Close();
@@ -181,7 +237,8 @@ namespace Tarea2BDRazor.Controllers
         {
             ViewBag.Message = "Página de registro.";
             Usuario user = new Usuario();
-            
+
+            Session["user_name"] = Session["user_name"];
             Session["IDG"] = Session["IDG"];
             Session["ID"] = Session["ID"];
             DateTime thisDay = DateTime.Now;
@@ -202,12 +259,47 @@ namespace Tarea2BDRazor.Controllers
             if (retorno > 0)
             {
                 MessageBox.Show("Registro completado", "Ok", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return Redirect("Loguear");
+                return RedirectToAction("crearBuzon", "Home", new { nombre_usuario = nombre});
             }
 
             
              MessageBox.Show("No se pudo realizar el registro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-             return Redirect("Registracion");
+             return Redirect("Registrarse");
         }
+
+        public ActionResult crearBuzon(string nombre_usuario) 
+        { 
+            Usuario usuario = new Usuario();
+            int id_usuario = usuario.obtenerUsuarioPorNombre(nombre_usuario).id;
+            String sql = "Insert into Buzon_entrada (id_usuario,cantidad_mensajes,mensajes_sin_leer) "
+            + "values  ('{0}','{1}','{2}')";
+
+            int retorno = 0;
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_usuario,0,0), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+
+            }
+
+            if (retorno > 0)
+            {
+                return Redirect("Loguearse");
+            }
+
+             return Redirect("Registrarse");
+        }
+
+        public ActionResult VerMensaje(int id_mensaje)
+        {
+            MensajePrivado mensaje = new MensajePrivado();
+            ViewBag.Mensaje = mensaje.obtenerMensajeIDMensaje(id_mensaje);
+
+            return View();
+
+        }
+        
     }
 }

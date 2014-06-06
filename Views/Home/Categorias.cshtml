@@ -7,17 +7,24 @@
 
 @section featured {
 
-
     <section class="featured">
         <div class="content-wrapper">
 
-    @if (int.Parse(Session["IDG"].ToString()) != -1) {
+ @{
+    if (int.Parse(Session["IDG"].ToString()) != 4) {
     <text>
-        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
         @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
+        @Html.ActionLink("Mail", "BuzonEntrada", "Home")
     </text>
     }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
 }
+
     <h2>Categorias</h2>
 
     @{
@@ -35,19 +42,33 @@
                 <ul>
                     <li>Descripción: @elemento.descripcion</li>
                     <li>Cantidad de Temas: @tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
-                    <li>Cantidad de Comentarios: </li>
+                    <li>Cantidad de Comentarios: @elemento.numComentariosPorCategoria(elemento.id_categoria) </li>
+                    @{
+                        
+                     if(int.Parse(Session["IDG"].ToString()) == 1 || int.Parse(Session["IDG"].ToString()) == 2)
+                     {
+                     
                     <li>@Html.ActionLink("Eliminar", "EliminarTemaRec", new { controller="Categorias", id_categoria = elemento.id_categoria})</li>
+                     }
+                     }
                 </ul>
             </ul>
             i++;     
-        }
         
-         <ul>
-                <li>@Html.ActionLink("Nueva Categoria","CrearCategoria", new { controller="Categorias"}) </li>
-         </ul>
+   
+           
+         
+                 if(int.Parse(Session["IDG"].ToString()) == 1)
+                 {
+                      <ul>
+                           <li>@Html.ActionLink("Nueva Categoria","CrearCategoria", new { controller="Categorias"}) </li>
+                     </ul>
+                 }
+       
+                 }    
         
-    }
+
+                 }
          </div>
     </section>
-}
- 
+    }

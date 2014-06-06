@@ -2,6 +2,20 @@
 @{
     ViewBag.Title = "Login";
 }
+
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
+    </text>
+    }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
+}
+
 <h2>Login</h2>
 @ViewBag.Message
 @ViewBag.Message1

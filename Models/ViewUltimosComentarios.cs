@@ -24,7 +24,7 @@ namespace Tarea2BDRazor.Models
         public List<ViewUltimosComentarios> ObtenerComentariosRealizados(int id)
         {
             List<ViewUltimosComentarios> views = new List<ViewUltimosComentarios>();
-            String sql = "Select TOP 5 *From VIEW_ULTIMOS_COMENTARIOS where id_usuario = '" + id + "' ORDER BY id_comentario DESC";
+            String sql = "Select TOP 5 *From VIEW_ULTIMOS_COMENTARIOS where id = '" + id + "' ORDER BY id_comentario DESC";
             using (SqlConnection connection = Conexion.getConnection())
             {
                 SqlCommand Comando = new SqlCommand(string.Format(sql, id), connection);

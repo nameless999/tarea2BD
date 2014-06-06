@@ -1,6 +1,54 @@
-﻿@{
-    ViewBag.Title = "MensajePrivado";
+﻿@using Tarea2BDRazor.Models
+@model Tarea2BDRazor.Models.MensajePrivado
+@{
+    ViewBag.Title = "EnviarMP";
 }
 
-<h2>MensajePrivado</h2>
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
+    </text>
+    }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
+}
 
+<h2>Redactar Mensaje</h2>
+
+@using (Html.BeginForm("Register", "Home", FormMethod.Post, new { onsubmit = "return userValid();"  }))
+{
+    <fieldset>
+        <legend> Ingrese sus datos </legend>
+
+        <p>
+            @{ 
+                Usuario user = new Usuario();
+                List<string> lista = new List<String>();
+                foreach( BuzonEntrada elemento in ViewBag.Buzones){
+                    lista.Add(user.obtenerNombreUsuarioPorID(elemento.id_usuario));
+                }
+            }
+            @Html.DropDownList("nombre_usuario", new SelectList(lista), "Para")
+        </p>
+
+        <p>
+            <label for="Asunto">Asunto:</label>
+            @Html.TextBox("asunto","" , new { id = "txtUserId" , placeholder="Ingrese asunto"})
+  
+
+        </p>
+
+        <p>
+            <label for="Mensaje">Mensaje:</label>
+            @Html.TextArea("mensaje", new { cols = 20, rows = 10 });
+        </p>
+
+        <p>
+            <input type="submit" value="Enviar Mensaje" />
+        </p>
+    </fieldset>
+}

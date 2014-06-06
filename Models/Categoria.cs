@@ -87,6 +87,16 @@ namespace Tarea2BDRazor.Models
             
         }
 
+        public int numComentariosPorCategoria(int id_categoria)
+        {
+            String sql = "Select count(*) from NComentariosPorCategoria where id_categoria = '" + id_categoria + "'";
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_categoria), connection);
+                int count = (int)Comando.ExecuteScalar();
+                return count;
+            }
+        }
         public int obtenerPrimerIDCategoria()
         {
             String sql = "Select id_categoria From Categoria";

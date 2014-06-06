@@ -1,38 +1,90 @@
-﻿@{
+﻿@model Tarea2BDRazor.Models.Usuario
+
+@{
     ViewBag.Title = "EditarPerfil";
 }
 
+<script type="text/javascript">
+        
+    function userValid() {
+        var pass,conpass, born, a_url;
+
+        born = document.getElementById("bornId").value;
+        a_url = document.getElementById("a_urlId").value;
+
+        pass = document.getElementById("txtPass1").value;
+        conpass = document.getElementById("txtPass2").value;
+ 
+
+        if (pass == '' && conpass == '' && born == '' && a_url == '') {
+            alert("Enter All Fields");
+            return false;
+        };
+
+        if (pass == '') {
+            alert("Please Enter Password");
+            return false;
+        };
+        if (pass != '' && conpass == '') {
+            alert("Please Confirm Password");
+            return false;
+        };
+        if (pass != conpass) {
+            alert("Password not match");
+            return false;
+        };
+        return true;
+    };
+</script>
+
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
+    </text>
+    }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
+}
 <h2>EditarPerfil</h2>
 
-@using (Html.BeginForm("EditarPerfil", "Home", FormMethod.Post))
+
+
+@using (Html.BeginForm("EditarPerfil2", "Home", FormMethod.Post,  new { onsubmit = "return userValid();"  } ))
 {
     
     <fieldset>
         <legend> Ingrese sus datos </legend>
 
+ 
+         <input type="hidden" name="nombre_usuario" value="@ViewBag.NombreUsuario2" />
+
         <p>
             <label for="Contraseña">Contraseña:</label>
-            @Html.TextBox("contraseña")
+            @Html.TextBoxFor(m => m.contraseña, new { id = "txtPass1", placeholder = "Ingrese su contraseña" })
         </p>
 
         <p>
             <label for="re_Contraseña">Repetir Contraseña:</label>
-            @Html.TextBox("re_contraseña")
+            @Html.TextBox("re_contraseña", "", new { id = "txtPass2" })
         </p>
 
         <p>
             <label for="Fecha_nacimiento">Fecha Nacimiento:</label>
-            @Html.TextBox("fecha_nacimiento")
+            @Html.TextBoxFor(m => m.fecha_nacimiento, new { id = "bornId" })
         </p>
          
          <p>
             <label for="Avatar_url">Avatar Url:</label>
-            @Html.TextBox("avatar_url")
+            @Html.TextBoxFor(m => m.avatar_url, new { id = "a_urlId" })
         </p>
 
 
         <p>
-            <input type="submit" value="Crear Tema" />
+            <input type="submit" value="Editar" />
         </p>
     </fieldset>
 }

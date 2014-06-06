@@ -18,8 +18,22 @@ namespace Tarea2BDRazor.Controllers
             int id_usuario = int.Parse(id_user);
             Session["ID"] = id_usuario ;
             Usuario usuario = new Usuario();
-            Session["user_name"] = usuario.obtenerNombreUsuarioPorID(id_usuario);
-            Session["IDG"] = Session["IDG"];
+
+            if (id_user == "-1")
+            {
+                Session["user_name"] = Session["user_name"];
+                Session["IDG"] = Session["IDG"];
+            }
+
+            else
+            {
+                Session["IDG"] = usuario.obtenerUsuarioPorID(id_usuario).id_group;
+                Session["user_name"] = usuario.obtenerNombreUsuarioPorID(id_usuario);
+            }
+
+
+            
+            
             Session["IdCategoria"] = Session["IdCategoria"];
 
             int id = int.Parse(nid);
@@ -153,6 +167,7 @@ namespace Tarea2BDRazor.Controllers
             return View();
         }
 
+        
 
         public ActionResult UpdateComentario(int id_comentario, int id_tema)
         {

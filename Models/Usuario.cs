@@ -106,13 +106,13 @@ namespace Tarea2BDRazor.Models
             return nombres;
         }
 
-        public string obtenerNombreUsuariosbyAvatarUrl(string Avatar_url)
+        public string obtenerNombreUsuariosbyAvatarUrl(string avatar_url)
         {
-            String sql = "Select nombre From Usuario where avatar_url = '"+ Avatar_url +"'";
+            String sql = "Select nombre From Usuario where avatar_url = '"+ avatar_url +"'";
 
             using (SqlConnection connection = Conexion.getConnection())
             {
-                SqlCommand Comando = new SqlCommand(string.Format(sql,Avatar_url), connection);
+                SqlCommand Comando = new SqlCommand(string.Format(sql,avatar_url), connection);
                 SqlDataReader reader = Comando.ExecuteReader();
                 reader.Read();
                 

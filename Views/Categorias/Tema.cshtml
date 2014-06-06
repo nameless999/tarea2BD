@@ -13,10 +13,17 @@
     <section class="featured">
         <div class="content-wrapper">
 
-                @if (int.Parse(Session["IDG"].ToString()) != -1) {
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
     <text>
-        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
     </text>
+    }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
 }
 
 <h2>@ViewBag.Tema.nombre</h2>
@@ -25,13 +32,18 @@
 <p>@ViewBag.Tema.mensaje</p>
 
 @{
+    
+    Usuario user = new Usuario();
     foreach( Comentario comentario in ViewBag.Comentarios){
          
-         <img src="@usuario.obtenerUsuarioPorID(comentario.id_usuario).avatar_url" width="40px"/> <span> @Html.ActionLink(usuario.obtenerNombreUsuarioPorID(comentario.id_usuario), "VerPerfil", "Home")</span>
+         <img src="@usuario.obtenerUsuarioPorID(comentario.id_usuario).avatar_url" width="40px"/> <span>@Html.ActionLink(@user.obtenerNombreUsuarioPorID(comentario.id_usuario), "VerPerfil", new { controller="Home", nombre = user.obtenerNombreUsuarioPorID(comentario.id_usuario)})</span>
          <p>@comentario.mensaje</p>
+         if( int.Parse(Session["IDG"].ToString()) == 1 || int.Parse(Session["IDG"].ToString()) == 2 || int.Parse(Session["IDG"].ToString()) == comentario.id_usuario)
+         {          
          <p>@Html.ActionLink("Eliminar", "EliminarComentarioPorID", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) 
           @Html.ActionLink("Editar" ,"UpdateComentario", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </p>          
-    }
+          }    
+}
 }
 
 @using (Html.BeginForm("CrearComentario", "Categorias", FormMethod.Post))

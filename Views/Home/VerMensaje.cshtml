@@ -1,0 +1,16 @@
+﻿@using Tarea2BDRazor.Models
+@{
+    ViewBag.Title = "VerMensaje";
+}
+
+<h2>VerMensaje</h2>
+@{ 
+    Usuario usuario = new Usuario();
+    string nombre = usuario.obtenerNombreUsuarioPorID(ViewBag.Mensaje.id_remitente);
+}
+
+<p>@nombre</p>
+<p>@ViewBag.Mensaje.mensaje</p>
+<p>@ViewBag.Mensaje.fecha_de_envio</p>
+
+

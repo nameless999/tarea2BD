@@ -1,0 +1,22 @@
+﻿@using Tarea2BDRazor.Models
+@{
+    ViewBag.Title = "BuzonEntrada";
+}
+
+<h2>BuzonEntrada</h2>   
+
+<ul>
+    @{ 
+        
+    foreach( MensajePrivado elemento in ViewBag.Mensajes)
+    {
+        
+      <li>@Html.ActionLink(elemento.id_mensaje.ToString() ,"VerMensaje", new { controller="Home", id_mensaje = elemento.id_mensaje}) </li>
+             
+    }
+    
+    <li>@Html.ActionLink("Enviar Mensaje" ,"MensajePrivado", new { controller="Home"}) </li>
+   
+    }
+
+  </ul> 
