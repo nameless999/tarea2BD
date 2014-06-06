@@ -10,8 +10,7 @@
     <section class="featured">
         <div class="content-wrapper">
 
- @{
-    if (int.Parse(Session["IDG"].ToString()) != 4) {
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
     <text>
         ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
         @Html.ActionLink("Logout", "Logout", "Home")
@@ -35,10 +34,10 @@
         int i = idCat.obtenerPrimerIDCategoria();
         foreach (Categoria elemento in ViewBag.ListCategorias)
         {
-            
-                 
+            i++;
             <ul>
-                <li>@Html.ActionLink(elemento.nombre, "Temas", new { controller="Categorias", nid = i, id_user = Session["ID"].ToString()}) </li>
+                <li>@Html.ActionLink(elemento.nombre, "Temas", new { controller="Categorias", nid = i-1, id_user = Session["ID"].ToString()}) </li>
+                                    
                 <ul>
                     <li>Descripción: @elemento.descripcion</li>
                     <li>Cantidad de Temas: @tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
@@ -51,10 +50,11 @@
                     <li>@Html.ActionLink("Eliminar", "EliminarTemaRec", new { controller="Categorias", id_categoria = elemento.id_categoria})</li>
                      }
                      }
+                    
                 </ul>
             </ul>
-            i++;     
-        
+            
+        }
    
            
          
@@ -65,7 +65,7 @@
                      </ul>
                  }
        
-                 }    
+                   
         
 
                  }

@@ -63,6 +63,18 @@ namespace Tarea2BDRazor.Models
             }
         }
 
+        public int CantidadMensajess(int id_buzon)
+        {
+            string sql = "Select Count(*) from Buzon_entrada where id_buzon = '" + id_buzon + "'";
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, id_buzon), connection);
+                int count = (int)Comando.ExecuteScalar();
+                return count;
+            }
+        }
+
         public int ObtenerIDBuzonconIDUsuario(int id_usuario)
         {
             string sql = "Select id_buzon from Buzon_entrada where id_usuario = '" + id_usuario + "'";
@@ -78,5 +90,6 @@ namespace Tarea2BDRazor.Models
             }
         }
 
+       
         }
     }

@@ -31,9 +31,6 @@ namespace Tarea2BDRazor.Controllers
                 Session["user_name"] = usuario.obtenerNombreUsuarioPorID(id_usuario);
             }
 
-
-            
-            
             Session["IdCategoria"] = Session["IdCategoria"];
 
             int id = int.Parse(nid);

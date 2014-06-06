@@ -5,15 +5,29 @@
 
 <h2>BuzonEntrada</h2>   
 
+ @if (int.Parse(Session["IDG"].ToString()) != 4) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "MiPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+        @Html.ActionLink("Inicio", "Categorias", "Home")
+        @Html.ActionLink("Mail", "BuzonEntrada", "Home")
+    </text>
+    }
+   else
+   {
+      @Html.ActionLink("Inicio", "Index", "Home")
+   }
+}
+
 <ul>
     @{ 
+        BuzonEntrada Buzon = new BuzonEntrada();    
+        foreach( MensajePrivado elemento in ViewBag.Mensajes)
+        {
         
-    foreach( MensajePrivado elemento in ViewBag.Mensajes)
-    {
-        
-      <li>@Html.ActionLink(elemento.id_mensaje.ToString() ,"VerMensaje", new { controller="Home", id_mensaje = elemento.id_mensaje}) </li>
-             
-    }
+          <li>@Html.ActionLink(elemento.id_mensaje.ToString() ,"VerMensaje", new { controller="Home", id_mensaje = elemento.id_mensaje}) </li>
+          <li>Mensajes Recibidos: @Buzon.CantidadMensajess(elemento.id_buzon)</li>       
+        }
     
     <li>@Html.ActionLink("Enviar Mensaje" ,"MensajePrivado", new { controller="Home"}) </li>
    
