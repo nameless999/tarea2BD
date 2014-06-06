@@ -106,6 +106,23 @@ namespace Tarea2BDRazor.Models
             return nombres;
         }
 
+        public string obtenerNombreUsuariosbyAvatarUrl(string Avatar_url)
+        {
+            String sql = "Select nombre From Usuario where avatar_url = '"+ Avatar_url +"'";
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql,Avatar_url), connection);
+                SqlDataReader reader = Comando.ExecuteReader();
+                reader.Read();
+                
+
+                    string nombre = reader.GetString(0);
+                    return nombre;
+
+            }
+        }
+
         public Usuario obtenerUsuarioPorID(int id_usuario)
         {
             String sql = "Select * From Usuario where id = '" + id_usuario + "'";

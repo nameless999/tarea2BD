@@ -4,9 +4,20 @@
 }
         
 
+
 @section featured {
+
+
     <section class="featured">
         <div class="content-wrapper">
+
+    @if (int.Parse(Session["IDG"].ToString()) != -1) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+    </text>
+    }
+}
     <h2>Categorias</h2>
 
     @{
@@ -22,9 +33,9 @@
             <ul>
                 <li>@Html.ActionLink(elemento.nombre, "Temas", new { controller="Categorias", nid = i, id_user = Session["ID"].ToString()}) </li>
                 <ul>
-                    <li>@elemento.descripcion</li>
-                    <li>@tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
-                    <li></li>
+                    <li>Descripción: @elemento.descripcion</li>
+                    <li>Cantidad de Temas: @tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
+                    <li>Cantidad de Comentarios: </li>
                     <li>@Html.ActionLink("Eliminar", "EliminarTemaRec", new { controller="Categorias", id_categoria = elemento.id_categoria})</li>
                 </ul>
             </ul>

@@ -2,6 +2,15 @@
 @{
     ViewBag.Title = "Página principal";
 }
+
+@if (int.Parse(Session["IDG"].ToString()) != -1) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+    </text>
+}
+
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
@@ -10,25 +19,25 @@
                 <h2>@ViewBag.Message</h2>
             </hgroup>
 
-        else 
-        {
             <ul>
                 <li>@Html.ActionLink("Registrarse", "Registrarse", "Home")</li>
                 <li>@Html.ActionLink("Iniciar sesión", "Loguear", "Home") </li>
             </ul>
-        }
+        
 
         <ul>
             @{
+                Tema tema = new Tema();
                 foreach (Categoria elemento in ViewBag.ListCategorias)
                 {
                  if (elemento.publico == true){
                 
                      <li>@elemento.nombre
                          <ul>
-                             <li>@elemento.descripcion</li>
-                             <li></li>
-                             <li></li>
+
+                            <li>Descripción: @elemento.descripcion</li>
+                            <li>Cantidad de Temas: @tema.CantidadTemasPorIDCategoria(elemento.id_categoria)</li>
+                            <li>Cantidad de Comentarios: </li>
                          
                          </ul>
                      </li>     

@@ -17,10 +17,8 @@ namespace Tarea2BDRazor.Controllers
         {
             int id_usuario = int.Parse(id_user);
             Session["ID"] = id_usuario ;
-
             Usuario usuario = new Usuario();
             Session["user_name"] = usuario.obtenerNombreUsuarioPorID(id_usuario);
-
             Session["IDG"] = Session["IDG"];
             Session["IdCategoria"] = Session["IdCategoria"];
 
@@ -42,7 +40,7 @@ namespace Tarea2BDRazor.Controllers
             Session["IDG"] = Session["IDG"];
             Session["ID"] = Session["ID"];
             Session["IdCategoria"] = Session["IdCategoria"];
-
+          
             Tema tem = new Tema();
             Tema tema = tem.ObtenerTemaPorNombre(nombreTema);
 

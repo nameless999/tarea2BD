@@ -13,6 +13,12 @@
     <section class="featured">
         <div class="content-wrapper">
 
+                @if (int.Parse(Session["IDG"].ToString()) != -1) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+    </text>
+}
+
 <h2>@ViewBag.Tema.nombre</h2>
 
 <p></p>
@@ -20,10 +26,11 @@
 
 @{
     foreach( Comentario comentario in ViewBag.Comentarios){
-         <img src="@usuario.obtenerUsuarioPorID(comentario.id_usuario).avatar_url" width="40px"/> <span>@usuario.obtenerNombreUsuarioPorID(comentario.id_usuario)</span>
+         
+         <img src="@usuario.obtenerUsuarioPorID(comentario.id_usuario).avatar_url" width="40px"/> <span> @Html.ActionLink(usuario.obtenerNombreUsuarioPorID(comentario.id_usuario), "VerPerfil", "Home")</span>
          <p>@comentario.mensaje</p>
-         <span>@Html.ActionLink("Eliminar", "EliminarComentarioPorID", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </span>
-         <span> @Html.ActionLink("Editar" ,"UpdateComentario", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </span>          
+         <p>@Html.ActionLink("Eliminar", "EliminarComentarioPorID", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) 
+          @Html.ActionLink("Editar" ,"UpdateComentario", new { controller="Categorias", id_tema = comentario.id_tema, id_comentario = comentario.id_comentario}) </p>          
     }
 }
 

@@ -4,7 +4,20 @@
 
 <h2>@ViewBag.NombreUsuario</h2>
 
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+
+@if (int.Parse(Session["IDG"].ToString()) != -1) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+        @Html.ActionLink("Logout", "Logout", "Home")
+    </text>
+    }
+            <br />
 <img src="@ViewBag.AvatarUrl" />
+@Html.ActionLink("Editar Perfil", "EditarPerfil", "Home")
+            
 <ul>
     <li>Nombre: @ViewBag.NombreUsuario</li>
     <li>Edad: @ViewBag.Edad</li>
@@ -13,3 +26,6 @@
     <li>Fecha de Registro: @ViewBag.FechaRegistro</li>
     <li>Tipo de Usuario: @ViewBag.TipoUsuario</li>
 </ul>
+            </div>
+        </section>
+            }

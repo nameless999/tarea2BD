@@ -89,7 +89,6 @@ namespace Tarea2BDRazor.Controllers
             {
                 if (Listnombres[i] == nombre && Listcontraseñas[i] == contraseña)
                 {
-                    ViewBag.ValidateLogin = true;
                     user2 = user.obtenerUsuarioPorNombre(nombre);
                     Session["user_name"] = user2.nombre;
                     Session["ID"] = user2.id;
@@ -104,7 +103,7 @@ namespace Tarea2BDRazor.Controllers
                
          }
 
-        public ActionResult Desloguear()
+        public ActionResult Logout()
         {
             Session["user_name"] = null;
             Session["IDG"] = -1;
@@ -129,6 +128,54 @@ namespace Tarea2BDRazor.Controllers
             return View();
         }
 
+        public ActionResult EditarPerfil()
+        {
+           return RedirectToAction("EditarPerfil2", new { avatar_url = Request["avatar_url"], contraseña=Request["contraseña"],fecha_nacimiento = Request["fecha_nacimiento"]});
+        }
+
+        public ActionResult EditarPerfil2(string avatar_url, string fecha_nacimiento, string contraseña  )
+        {
+            Usuario user = new Usuario();
+            string nombre = user.obtenerNombreUsuariosbyAvatarUrl(avatar_url);
+            String sql = "Update Usuario set contraseña = '" + contraseña + "' where nombre = '" + nombre + "'";
+            String sql2 = "Update Usuario set fecha_nacimiento = '" + fecha_nacimiento + "' where nombre = '" + nombre + "'";
+            String sql3 = "Update Usuario set avatar_url = '" + avatar_url + "' where nombre = '" + nombre + "'";
+            int retorno = 0;
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql, nombre), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql2, nombre), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            using (SqlConnection connection = Conexion.getConnection())
+            {
+                SqlCommand Comando = new SqlCommand(string.Format(sql3, nombre), connection);
+
+                retorno = Comando.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            if (retorno > 0)
+            {
+                return Redirect("VerPerfil");
+            }
+
+ 
+             return Redirect("EditarPerfil");
+        }
+            
+
         [HttpPost]
         public ActionResult Register(string nombre, string contraseña, string re_contraseña, string fecha_nacimiento, string sexo, string avatar_url)
         {
@@ -145,7 +192,7 @@ namespace Tarea2BDRazor.Controllers
 
             using (SqlConnection connection = Conexion.getConnection())
             {
-                SqlCommand Comando = new SqlCommand(string.Format(sql,4, nombre, contraseña, 0, avatar_url, fecha_nacimiento, sexo, fecha_registro), connection);
+                SqlCommand Comando = new SqlCommand(string.Format(sql, 3, nombre, contraseña, 0, avatar_url, fecha_nacimiento, sexo, fecha_registro), connection);
 
                 retorno = Comando.ExecuteNonQuery();
                 connection.Close();

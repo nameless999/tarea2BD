@@ -181,6 +181,8 @@
     <Compile Include="Models\GrupoUsuario.cs" />
     <Compile Include="Models\Tema.cs" />
     <Compile Include="Models\Usuario.cs" />
+    <Compile Include="Models\ViewTemasCreados.cs" />
+    <Compile Include="Models\ViewUltimosComentarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,11 +280,8 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Loguear.cshtml" />
     <Content Include="Views\Home\Registrarse.cshtml" />
@@ -294,6 +293,7 @@
     <Content Include="Views\Categorias\CrearCategoria.cshtml" />
     <Content Include="Views\Home\VerPerfil.cshtml" />
     <Content Include="Views\Home\MensajePrivado.cshtml" />
+    <Content Include="Views\Home\EditarPerfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

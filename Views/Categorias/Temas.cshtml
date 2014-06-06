@@ -12,6 +12,12 @@
     <section class="featured">
         <div class="content-wrapper">
 
+                @if (int.Parse(Session["IDG"].ToString()) != -1) {
+    <text>
+        ¡Hola, @Html.ActionLink(Session["user_name"].ToString(), "VerPerfil", "Home")!
+    </text>
+}
+
 <h2>@ViewBag.NombreCat</h2>
 
      @{
@@ -22,11 +28,13 @@
                  
             <ul>
                 <li>@Html.ActionLink(elemento.nombre, "Tema", new { controller="Categorias", nombreTema = elemento.nombre}) </li>
+                <ul>
                 <li>Descripción: @elemento.descripcion</li>
-                <li>Publicado por: @user.obtenerNombreUsuarioPorID(elemento.id_usuario)</li>
+                <li>Publicado por: @Html.ActionLink(@user.obtenerNombreUsuarioPorID(elemento.id_usuario), "VerPerfil", "Home")</li>
                 <li>Cantidad de comentarios: @comentario.cantidadComentariosPorIDTema(elemento.id_tema)</li>  
                 <li>@Html.ActionLink("Eliminar Tema", "EliminarComentariosRec", new { controller="Categorias", id_tema = elemento.id_tema, id_categoria = elemento.id_categoria})   </li> 
-            </ul>
+                </ul>                
+          </ul>
             i++;  
          }     
          

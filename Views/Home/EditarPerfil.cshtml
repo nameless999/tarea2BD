@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "EditarPerfil";
+}
+
+<h2>EditarPerfil</h2>
+
+@using (Html.BeginForm("EditarPerfil", "Home", FormMethod.Post))
+{
+    
+    <fieldset>
+        <legend> Ingrese sus datos </legend>
+
+        <p>
+            <label for="Contraseña">Contraseña:</label>
+            @Html.TextBox("contraseña")
+        </p>
+
+        <p>
+            <label for="re_Contraseña">Repetir Contraseña:</label>
+            @Html.TextBox("re_contraseña")
+        </p>
+
+        <p>
+            <label for="Fecha_nacimiento">Fecha Nacimiento:</label>
+            @Html.TextBox("fecha_nacimiento")
+        </p>
+         
+         <p>
+            <label for="Avatar_url">Avatar Url:</label>
+            @Html.TextBox("avatar_url")
+        </p>
+
+
+        <p>
+            <input type="submit" value="Crear Tema" />
+        </p>
+    </fieldset>
+}
